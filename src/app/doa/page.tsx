@@ -13,42 +13,20 @@ import {
 } from 'lucide-react'
 
 const doaList = [
-  {
-    id: 'niat-puasa',
-    category: 'Puasa',
-    title: 'Niat Puasa Ramadhan',
-    arabic: 'نَوَيْتُ صَوْمَ غَدٍ عَنْ أَدَاءِ فَرْضِ شَهْرِ رَمَضَانَ هٰذِهِ السَّنَةِ لِلّٰهِ تَعَالَى',
-    latin: 'Nawaitu shauma ghadin \'an adaa-i fardhi syahri ramadhana haadzihis sanati lillaahi ta\'aalaa',
-    arti: 'Aku berniat puasa esok hari untuk menunaikan kewajiban di bulan Ramadhan tahun ini karena Allah Ta\'ala',
-    icon: Moon,
-    color: 'from-indigo-500 to-purple-500',
-    bgColor: 'bg-indigo-50',
-    textColor: 'text-indigo-600'
-  },
+ 
   {
     id: 'buka-puasa',
     category: 'Puasa',
     title: 'Doa Berbuka Puasa',
-    arabic: 'اَللّٰهُمَّ لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ بِرَحْمَتِكَ يَا أَرْحَمَ الرَّاحِمِينَ',
-    latin: 'Allahumma laka shumtu wa bika aamantu wa \'alaa rizqika afthartu bi rahmatika yaa arhamar raahimiin',
-    arti: 'Ya Allah, untuk-Mu aku berpuasa, kepada-Mu aku beriman, dan dengan rezeki-Mu aku berbuka. Dengan rahmat-Mu wahai Yang Maha Pengasih',
+    arabic: 'ذَهَبَ الظَّمَأُ، وَابْتَلَّتِ الْعُرُوقُ، وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ',
+    latin: 'Dzahaba adh-dhamaau wabtallatil-urooq wa tsabata al-ajru in syaa Allah',
+    arti: 'Telah hilang dahaga, urat-urat telah basah, dan pahala telah tetap, insya Allah',
     icon: UtensilsCrossed,
     color: 'from-amber-500 to-orange-500',
     bgColor: 'bg-amber-50',
     textColor: 'text-amber-600'
   },
-  {
-    id: 'sahur',
-    category: 'Puasa',
-    title: 'Doa Makan Sahur',
-    arabic: 'وَبِصَوْمِ غَدٍ نَوَيْتُ مِنْ شَهْرِ رَمَضَانَ',
-    latin: 'Wa bishaumi ghadin nawaitu min syahri ramadhan',
-    arti: 'Dan dengan puasa esok hari, aku berniat di bulan Ramadhan',
-    icon: Sun,
-    color: 'from-cyan-500 to-blue-500',
-    bgColor: 'bg-cyan-50',
-    textColor: 'text-cyan-600'
-  },
+
   {
     id: 'sebelum-makan',
     category: 'Harian',
@@ -86,12 +64,12 @@ const doaList = [
     textColor: 'text-violet-600'
   },
   {
-    id: 'tahajud',
+    id: 'setelah-witir',
     category: 'Sholat',
-    title: 'Doa Sholat Tahajud',
-    arabic: 'اللَّهُمَّ لَكَ الْحَمْدُ أَنْتَ نُورُ السَّمَاوَاتِ وَالْأَرْضِ، وَلَكَ الْحَمْدُ أَنْتَ قَيِّمُ السَّمَاوَاتِ وَالْأَرْضِ',
-    latin: 'Allahumma lakal hamdu anta nuurus samaawaati wal ardhi, wa lakal hamdu anta qayyimus samaawaati wal ardhi',
-    arti: 'Ya Allah, bagi-Mu segala puji, Engkau cahaya langit dan bumi, bagi-Mu segala puji, Engkau penegak langit dan bumi',
+    title: 'Doa Setelah Witir',
+    arabic: 'سُبْحَانَ الْمَلِكِ الْقُدُّوسِ',
+    latin: 'Subhana al-malik al-quddus',
+    arti: 'Maha Suci Allah, Raja yang Maha Kudus',
     icon: Moon,
     color: 'from-slate-600 to-slate-800',
     bgColor: 'bg-slate-50',
@@ -125,33 +103,22 @@ const doaList = [
     id: 'mohon-ampunan',
     category: 'Ramadhan',
     title: 'Doa Mohon Ampunan',
-    arabic: 'رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ',
-    latin: 'Rabbana zhalamna anfusana wa il lam taghfir lana wa tarhamna lanakunanna minal khaasiriin',
-    arti: 'Ya Tuhan kami, kami telah menganiaya diri sendiri. Jika Engkau tidak mengampuni kami dan memberi rahmat kepada kami, niscaya kami termasuk orang-orang yang merugi',
+    arabic: 'اللَّهُمَّ اغْفِرْ لِي، وَتُبْ عَلَيَّ، إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيْمُ',
+    latin: 'Allahumma ighfir lii, wa tub \'alayya, innaka anta at-tawwaabu ar-rahiim',
+    arti: 'Ya Allah, ampunilah aku, dan terimalah taubatku, sesungguhnya Engkau Maha Penerima Taubat lagi Maha Penyayang',
     icon: Heart,
     color: 'from-red-500 to-rose-500',
     bgColor: 'bg-red-50',
     textColor: 'text-red-600'
   },
-  {
-    id: 'keberkahan',
-    category: 'Ramadhan',
-    title: 'Doa Memohon Keberkahan',
-    arabic: 'اللَّهُمَّ بَارِكْ لَنَا فِي رَجَبٍ وَشَعْبَانَ وَبَلِّغْنَا رَمَضَانَ',
-    latin: 'Allahumma baarik lanaa fii Rajab wa Sya\'baan wa ballighna Ramadhaan',
-    arti: 'Ya Allah, berkahilah kami di bulan Rajab dan Sya\'ban, dan pertemukan kami dengan bulan Ramadhan',
-    icon: Star,
-    color: 'from-teal-500 to-emerald-500',
-    bgColor: 'bg-teal-50',
-    textColor: 'text-teal-600'
-  },
+
   {
     id: 'qunut',
     category: 'Sholat',
     title: 'Doa Qunut',
-    arabic: 'اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ وَعَافِنِي فِيمَنْ عَافَيْتَ وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ',
-    latin: 'Allahummah dinii fiiman hadait, wa \'aafinii fiiman \'aafait, wa tawallanii fiiman tawallait',
-    arti: 'Ya Allah, berilah aku petunjuk di antara orang yang Engkau beri petunjuk, berilah aku keselamatan di antara orang yang Engkau selamatkan, dan peliharalah aku di antara orang yang Engkau pelihara',
+    arabic: 'اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ، وَبَارِكْ لِي فِيمَا أَعْطَيْتَ، وَقِنِي شَرَّ مَا قَضَيْتَ، فَإِنَّكَ تَقْضِي وَلَا يُقْضَى عَلَيْكَ، وَإِنَّهُ لَا يَذِلُّ مَنْ وَالَيْتَ، وَلَا يَعِزُّ مَنْ عَادَيْتَ، تَبَارَكْتَ رَبَّنَا وَتَعَالَيْتَ',
+    latin: 'Allahumma ihdinii fiiman hadait, wa \'aafinii fiiman \'aafait, wa tawallanii fiiman tawallait, wa baarik lii fiimaa a\'thait, wa qinii syarra maa qadhait, fa innaka taqdhii wa laa yuqdhii \'alaik, wa innahu laa yadzillu man waalait, wa laa ya\'izzu man aadait, tabaarakta rabbanaa wa ta\'alaait', 
+    arti: 'Ya Allah, berilah aku petunjuk di antara orang-orang yang Engkau beri petunjuk, dan berilah aku keselamatan di antara orang-orang yang telah Engkau beri keselamatan, uruslah diriku di antara orang-orang yang telah Engkau urus, berkahilah untukku apa yang telah Engkau berikan kepadaku, lindungilah aku dari keburukan apa yang telah Engkau tetapkan, sesungguhnya Engkau Yang memutuskan dan tidak diputuskan kepadaku, sesungguhnya tidak akan hina orang yang telah Engkau jaga dan Engkau tolong (dan orang yang memusuhi Engkau tidak akan mulia). Engkau Maha Suci dan Maha Tinggi Engkau Rabb kami',
     icon: BookOpen,
     color: 'from-purple-500 to-pink-500',
     bgColor: 'bg-purple-50',
