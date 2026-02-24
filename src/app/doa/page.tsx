@@ -1,0 +1,279 @@
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import Navbar from '@/components/Navbar'
+import { 
+  BookOpen, 
+  Moon, 
+  Sun, 
+  UtensilsCrossed,
+  Sparkles,
+  Heart,
+  Star,
+  Clock
+} from 'lucide-react'
+
+const doaList = [
+  {
+    id: 'niat-puasa',
+    category: 'Puasa',
+    title: 'Niat Puasa Ramadhan',
+    arabic: 'نَوَيْتُ صَوْمَ غَدٍ عَنْ أَدَاءِ فَرْضِ شَهْرِ رَمَضَانَ هٰذِهِ السَّنَةِ لِلّٰهِ تَعَالَى',
+    latin: 'Nawaitu shauma ghadin \'an adaa-i fardhi syahri ramadhana haadzihis sanati lillaahi ta\'aalaa',
+    arti: 'Aku berniat puasa esok hari untuk menunaikan kewajiban di bulan Ramadhan tahun ini karena Allah Ta\'ala',
+    icon: Moon,
+    color: 'from-indigo-500 to-purple-500',
+    bgColor: 'bg-indigo-50',
+    textColor: 'text-indigo-600'
+  },
+  {
+    id: 'buka-puasa',
+    category: 'Puasa',
+    title: 'Doa Berbuka Puasa',
+    arabic: 'اَللّٰهُمَّ لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ بِرَحْمَتِكَ يَا أَرْحَمَ الرَّاحِمِينَ',
+    latin: 'Allahumma laka shumtu wa bika aamantu wa \'alaa rizqika afthartu bi rahmatika yaa arhamar raahimiin',
+    arti: 'Ya Allah, untuk-Mu aku berpuasa, kepada-Mu aku beriman, dan dengan rezeki-Mu aku berbuka. Dengan rahmat-Mu wahai Yang Maha Pengasih',
+    icon: UtensilsCrossed,
+    color: 'from-amber-500 to-orange-500',
+    bgColor: 'bg-amber-50',
+    textColor: 'text-amber-600'
+  },
+  {
+    id: 'sahur',
+    category: 'Puasa',
+    title: 'Doa Makan Sahur',
+    arabic: 'وَبِصَوْمِ غَدٍ نَوَيْتُ مِنْ شَهْرِ رَمَضَانَ',
+    latin: 'Wa bishaumi ghadin nawaitu min syahri ramadhan',
+    arti: 'Dan dengan puasa esok hari, aku berniat di bulan Ramadhan',
+    icon: Sun,
+    color: 'from-cyan-500 to-blue-500',
+    bgColor: 'bg-cyan-50',
+    textColor: 'text-cyan-600'
+  },
+  {
+    id: 'sebelum-makan',
+    category: 'Harian',
+    title: 'Doa Sebelum Makan',
+    arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ',
+    latin: 'Bismillahir rahmanir rahiim',
+    arti: 'Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang',
+    icon: UtensilsCrossed,
+    color: 'from-emerald-500 to-green-500',
+    bgColor: 'bg-emerald-50',
+    textColor: 'text-emerald-600'
+  },
+  {
+    id: 'sesudah-makan',
+    category: 'Harian',
+    title: 'Doa Sesudah Makan',
+    arabic: 'اَلْحَمْدُ لِلّٰهِ الَّذِيْ أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِيْنَ',
+    latin: 'Alhamdulillaahil ladzii ath\'amanaa wa saqaanaa wa ja\'alanaa muslimiin',
+    arti: 'Segala puji bagi Allah yang telah memberi kami makan dan minum, serta menjadikan kami orang-orang Muslim',
+    icon: Heart,
+    color: 'from-pink-500 to-rose-500',
+    bgColor: 'bg-pink-50',
+    textColor: 'text-pink-600'
+  },
+  {
+    id: 'lailatul-qadr',
+    category: 'Ramadhan',
+    title: 'Doa Malam Lailatul Qadr',
+    arabic: 'اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي',
+    latin: 'Allahumma innaka \'afuwwun tuhibbul \'afwa fa\'fu \'annii',
+    arti: 'Ya Allah, sesungguhnya Engkau Maha Pemaaf, Engkau mencintai ampunan, maka ampunilah aku',
+    icon: Sparkles,
+    color: 'from-violet-500 to-purple-600',
+    bgColor: 'bg-violet-50',
+    textColor: 'text-violet-600'
+  },
+  {
+    id: 'tahajud',
+    category: 'Sholat',
+    title: 'Doa Sholat Tahajud',
+    arabic: 'اللَّهُمَّ لَكَ الْحَمْدُ أَنْتَ نُورُ السَّمَاوَاتِ وَالْأَرْضِ، وَلَكَ الْحَمْدُ أَنْتَ قَيِّمُ السَّمَاوَاتِ وَالْأَرْضِ',
+    latin: 'Allahumma lakal hamdu anta nuurus samaawaati wal ardhi, wa lakal hamdu anta qayyimus samaawaati wal ardhi',
+    arti: 'Ya Allah, bagi-Mu segala puji, Engkau cahaya langit dan bumi, bagi-Mu segala puji, Engkau penegak langit dan bumi',
+    icon: Moon,
+    color: 'from-slate-600 to-slate-800',
+    bgColor: 'bg-slate-50',
+    textColor: 'text-slate-600'
+  },
+  {
+    id: 'sebelum-tidur',
+    category: 'Harian',
+    title: 'Doa Sebelum Tidur',
+    arabic: 'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا',
+    latin: 'Bismika Allahumma amuutu wa ahyaa',
+    arti: 'Dengan nama-Mu ya Allah, aku mati dan hidup',
+    icon: Clock,
+    color: 'from-blue-600 to-indigo-600',
+    bgColor: 'bg-blue-50',
+    textColor: 'text-blue-600'
+  },
+  {
+    id: 'bangun-tidur',
+    category: 'Harian',
+    title: 'Doa Bangun Tidur',
+    arabic: 'اَلْحَمْدُ لِلّٰهِ الَّذِيْ أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ',
+    latin: 'Alhamdulillaahil ladzii ahyaanaa ba\'da maa amaatanaa wa ilaihin nusyuur',
+    arti: 'Segala puji bagi Allah yang telah menghidupkan kami setelah mematikan kami dan kepada-Nya kami kembali',
+    icon: Sun,
+    color: 'from-yellow-500 to-amber-500',
+    bgColor: 'bg-yellow-50',
+    textColor: 'text-yellow-600'
+  },
+  {
+    id: 'mohon-ampunan',
+    category: 'Ramadhan',
+    title: 'Doa Mohon Ampunan',
+    arabic: 'رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ',
+    latin: 'Rabbana zhalamna anfusana wa il lam taghfir lana wa tarhamna lanakunanna minal khaasiriin',
+    arti: 'Ya Tuhan kami, kami telah menganiaya diri sendiri. Jika Engkau tidak mengampuni kami dan memberi rahmat kepada kami, niscaya kami termasuk orang-orang yang merugi',
+    icon: Heart,
+    color: 'from-red-500 to-rose-500',
+    bgColor: 'bg-red-50',
+    textColor: 'text-red-600'
+  },
+  {
+    id: 'keberkahan',
+    category: 'Ramadhan',
+    title: 'Doa Memohon Keberkahan',
+    arabic: 'اللَّهُمَّ بَارِكْ لَنَا فِي رَجَبٍ وَشَعْبَانَ وَبَلِّغْنَا رَمَضَانَ',
+    latin: 'Allahumma baarik lanaa fii Rajab wa Sya\'baan wa ballighna Ramadhaan',
+    arti: 'Ya Allah, berkahilah kami di bulan Rajab dan Sya\'ban, dan pertemukan kami dengan bulan Ramadhan',
+    icon: Star,
+    color: 'from-teal-500 to-emerald-500',
+    bgColor: 'bg-teal-50',
+    textColor: 'text-teal-600'
+  },
+  {
+    id: 'qunut',
+    category: 'Sholat',
+    title: 'Doa Qunut',
+    arabic: 'اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ وَعَافِنِي فِيمَنْ عَافَيْتَ وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ',
+    latin: 'Allahummah dinii fiiman hadait, wa \'aafinii fiiman \'aafait, wa tawallanii fiiman tawallait',
+    arti: 'Ya Allah, berilah aku petunjuk di antara orang yang Engkau beri petunjuk, berilah aku keselamatan di antara orang yang Engkau selamatkan, dan peliharalah aku di antara orang yang Engkau pelihara',
+    icon: BookOpen,
+    color: 'from-purple-500 to-pink-500',
+    bgColor: 'bg-purple-50',
+    textColor: 'text-purple-600'
+  }
+]
+
+export default async function DoaPage() {
+  const supabase = await createClient()
+  
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/auth/login')
+  }
+
+  // Get user profile
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single()
+
+  const categories = ['Puasa', 'Ramadhan', 'Sholat', 'Harian']
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50">
+      <Navbar userName={profile?.name} />
+      
+      {/* Header */}
+      <div className="pt-36 md:pt-24 pb-4 px-4 md:px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="relative overflow-hidden rounded-3xl gradient-primary p-6 md:p-8 text-white">
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-bold">Doa Harian Ramadhan</h1>
+                  <p className="text-white/80">Kumpulan doa-doa penting</p>
+                </div>
+              </div>
+            </div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <main className="max-w-4xl mx-auto px-4 md:px-6 pb-32">
+        {/* Category Filter */}
+        <div className="flex gap-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
+          <a 
+            href="#semua"
+            className="px-4 py-2 bg-primary-500 text-white rounded-full text-sm font-medium whitespace-nowrap"
+          >
+            Semua
+          </a>
+          {categories.map((cat) => (
+            <a
+              key={cat}
+              href={`#${cat.toLowerCase()}`}
+              className="px-4 py-2 bg-white text-slate-600 hover:bg-primary-50 hover:text-primary-600 rounded-full text-sm font-medium whitespace-nowrap transition-colors border border-slate-200"
+            >
+              {cat}
+            </a>
+          ))}
+        </div>
+
+        {/* Doa Cards */}
+        <div className="space-y-4">
+          {doaList.map((doa) => {
+            const Icon = doa.icon
+            return (
+              <div 
+                key={doa.id}
+                className="bg-white rounded-2xl shadow-soft overflow-hidden card-hover border border-slate-100"
+              >
+                {/* Header */}
+                <div className={`p-4 ${doa.bgColor} border-b border-slate-100`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${doa.color} text-white flex items-center justify-center shadow-md`}>
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-slate-800">{doa.title}</h3>
+                        <span className={`text-xs font-medium ${doa.textColor}`}>{doa.category}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="p-5 space-y-4">
+                  {/* Arabic */}
+                  <div className="text-center py-4 px-6 bg-slate-50 rounded-xl">
+                    <p className="text-2xl md:text-3xl leading-loose font-arabic text-slate-800" dir="rtl">
+                      {doa.arabic}
+                    </p>
+                  </div>
+                  
+                  {/* Latin */}
+                  <div>
+                    <p className="text-xs text-slate-400 mb-1 font-medium uppercase tracking-wide">Lafadz</p>
+                    <p className="text-slate-600 italic">{doa.latin}</p>
+                  </div>
+                  
+                  {/* Meaning */}
+                  <div className={`p-4 rounded-xl ${doa.bgColor}`}>
+                    <p className="text-xs text-slate-400 mb-1 font-medium uppercase tracking-wide">Artinya</p>
+                    <p className={`${doa.textColor} font-medium`}>{doa.arti}</p>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </main>
+    </div>
+  )
+}
